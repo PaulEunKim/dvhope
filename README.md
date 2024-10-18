@@ -9,5 +9,7 @@ conda create --name dvhope
 conda activate dvhope
 conda install -c conda-forge altair numpy pandas streamlit plotly folium streamlit-folium
 
+git checkout streamlit_concept
+
 streamlit run main.py
 ```
