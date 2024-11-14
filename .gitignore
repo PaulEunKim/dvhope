@@ -1,3 +1,6 @@
 /data/NEI_pollution_source_2020.xlsx
 /data/NEI_pollution_source_2020.csv
 /data/.ipynb_checkpoints/NEI_pollution_source_2020-checkpoint.csv
+/data_model/*.csv
+/data_preprocessing/*.csv
+/exploratory_data_analysis/*.csv

@@ -1,0 +1,202 @@
+[
+    {
+        "State": "Alabama",
+        "predict_scaled": 0.5955121789
+    },
+    {
+        "State": "Alaska",
+        "predict_scaled": 0.5096866784
+    },
+    {
+        "State": "Arizona",
+        "predict_scaled": 0.7021983699
+    },
+    {
+        "State": "Arkansas",
+        "predict_scaled": 0.6362778392
+    },
+    {
+        "State": "California",
+        "predict_scaled": 0.4253534366
+    },
+    {
+        "State": "Colorado",
+        "predict_scaled": 0.7011779034
+    },
+    {
+        "State": "Delaware",
+        "predict_scaled": 0.6047562209
+    },
+    {
+        "State": "District Of Columbia",
+        "predict_scaled": 0.4166641298
+    },
+    {
+        "State": "Florida",
+        "predict_scaled": 0.6972943411
+    },
+    {
+        "State": "Georgia",
+        "predict_scaled": 0.5704354999
+    },
+    {
+        "State": "Hawaii",
+        "predict_scaled": 0.2380487045
+    },
+    {
+        "State": "Idaho",
+        "predict_scaled": 0.7260759037
+    },
+    {
+        "State": "Illinois",
+        "predict_scaled": 0.5900190395
+    },
+    {
+        "State": "Indiana",
+        "predict_scaled": 0.704033959
+    },
+    {
+        "State": "Iowa",
+        "predict_scaled": 0.6838291768
+    },
+    {
+        "State": "Kansas",
+        "predict_scaled": 0.6755959899
+    },
+    {
+        "State": "Kentucky",
+        "predict_scaled": 0.7711463263
+    },
+    {
+        "State": "Louisiana",
+        "predict_scaled": 0.5031740256
+    },
+    {
+        "State": "Maine",
+        "predict_scaled": 0.781078897
+    },
+    {
+        "State": "Maryland",
+        "predict_scaled": 0.5794681948
+    },
+    {
+        "State": "Massachusetts",
+        "predict_scaled": 0.6733782307
+    },
+    {
+        "State": "Michigan",
+        "predict_scaled": 0.752245659
+    },
+    {
+        "State": "Minnesota",
+        "predict_scaled": 0.710113701
+    },
+    {
+        "State": "Mississippi",
+        "predict_scaled": 0.4770962497
+    },
+    {
+        "State": "Missouri",
+        "predict_scaled": 0.7006783904
+    },
+    {
+        "State": "Montana",
+        "predict_scaled": 0.7142014703
+    },
+    {
+        "State": "Nebraska",
+        "predict_scaled": 0.639760494
+    },
+    {
+        "State": "Nevada",
+        "predict_scaled": 0.6134993818
+    },
+    {
+        "State": "New Hampshire",
+        "predict_scaled": 0.8341722476
+    },
+    {
+        "State": "New Jersey",
+        "predict_scaled": 0.4902646418
+    },
+    {
+        "State": "New Mexico",
+        "predict_scaled": 0.3899517188
+    },
+    {
+        "State": "New York",
+        "predict_scaled": 0.6221326824
+    },
+    {
+        "State": "North Carolina",
+        "predict_scaled": 0.581969503
+    },
+    {
+        "State": "North Dakota",
+        "predict_scaled": 0.7564692806
+    },
+    {
+        "State": "Ohio",
+        "predict_scaled": 0.7533862586
+    },
+    {
+        "State": "Oklahoma",
+        "predict_scaled": 0.6029200061
+    },
+    {
+        "State": "Oregon",
+        "predict_scaled": 0.7161342769
+    },
+    {
+        "State": "Pennsylvania",
+        "predict_scaled": 0.7132877618
+    },
+    {
+        "State": "Rhode Island",
+        "predict_scaled": 0.7113098332
+    },
+    {
+        "State": "South Carolina",
+        "predict_scaled": 0.5865108123
+    },
+    {
+        "State": "South Dakota",
+        "predict_scaled": 0.6701614123
+    },
+    {
+        "State": "Tennessee",
+        "predict_scaled": 0.6910941487
+    },
+    {
+        "State": "Texas",
+        "predict_scaled": 0.4631592211
+    },
+    {
+        "State": "Utah",
+        "predict_scaled": 0.8100718148
+    },
+    {
+        "State": "Vermont",
+        "predict_scaled": 0.8131702667
+    },
+    {
+        "State": "Virginia",
+        "predict_scaled": 0.7228104427
+    },
+    {
+        "State": "Washington",
+        "predict_scaled": 0.8153359203
+    },
+    {
+        "State": "West Virginia",
+        "predict_scaled": 0.8650201045
+    },
+    {
+        "State": "Wisconsin",
+        "predict_scaled": 0.7162105068
+    },
+    {
+        "State": "Wyoming",
+        "predict_scaled": 0.7054520618
+    }
+]
