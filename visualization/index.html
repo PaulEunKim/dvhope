@@ -1,9 +1,10 @@
+<!-- Interactive choropleth map used from https://leafletjs.com/examples/choropleth/ -->
 <!DOCTYPE html>
 <meta charset="utf-8">
 
 <head>
     <!-- add title -->
-    <title>Board Game Ratings Choropleth Map</title>
+    <title>Predicted Cancer Rates based off Pollutants</title>
     <!-- import required libraries here -->
     <script type="text/javascript" src="lib/d3.v5.min.js"></script>
     <script type="text/javascript" src="lib/topojson.v2.min.js"></script>
@@ -57,7 +58,7 @@
 <body>
 
     <!-- Add heading for the visualization -->
-    <h1>Board Game Ratings Across the World</h1>
+    <h1>Predicted Cancer Rates based off Pollutants</h1>
     <!-- Create dropdown element here. Options should be added after reading in game file, they should not be created here.-->
     <select id="gameDropdown"></select>
     <div id="map"></div>
@@ -143,8 +144,8 @@
 
         // method that we will use to update the control based on feature properties passed
         info.update = function (props) {
-            this._div.innerHTML = '<h4>Predicted Health Outcome</h4>' + (props ?
-                '<b>' + props.name + '</b><br />' + props.predict + ' people / mi<sup>2</sup>'
+            this._div.innerHTML = '<h4>Age Adjusted Cancer Prevalence</h4>' + (props ?
+                '<b>' + props.name + '</b><br />' + props.predict.toFixed(1) + '%'
                 : 'Hover over a state');
         };
 
@@ -155,14 +156,14 @@
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'info legend'),
-                grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+                grades = [5.75, 6, 6.25, 6.5, 6.75, 7, 7.25, 7.5],
                 labels = [];
 
             // loop through our density intervals and generate a label with a colored square for each interval
             for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    '<i style="background:' + getColor(grades[i] + 0.1) + '"></i> ' +
+                    grades[i] + '%' + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' : '+') + '<br>';
             }
 
             return div;
