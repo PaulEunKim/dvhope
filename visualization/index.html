@@ -22,7 +22,7 @@
     <style>
         /* define CSS rules here */
         #map {
-            height: 500px;
+            height: 700px;
         }
 
         .info {
@@ -51,6 +51,55 @@
             margin-right: 8px;
             opacity: 0.7;
         }
+
+        .title {
+            font-size: 46px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* Ensure space between columns */
+            align-items: flex-start;
+            /* Align items at the top */
+            gap: 20px;
+            /* Add space between columns */
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1;
+            /* Each column takes up equal space */
+            padding: 10px;
+        }
+
+        .column-left {
+            flex: 20%; /* 20% width */
+            background-color: #f9f9f9; /* Light gray for distinction */
+        }
+
+        .column-right {
+            flex: 80%; /* 80% width */
+            background-color: #e9f7ff; /* Light blue for distinction */
+        }
+
+        img {
+            max-width: 100%;
+            /* Ensure images fit in their container */
+            height: auto;
+            /* Maintain aspect ratio */
+            border: 2px solid #ccc;
+        }
     </style>
 
     <title></title>
@@ -60,11 +109,59 @@
 <body>
 
     <!-- Add heading for the visualization -->
-    <h1>Predicted Cancer Rates based off Pollutants</h1>
+    <h1 class="title">Predicted Cancer Rates based off Pollutants</h1>
     <!-- Create dropdown element here. Options should be added after reading in game file, they should not be created here.-->
-    <select id="gameDropdown"></select>
-    <div id="map"></div>
+    <!-- <select id="gameDropdown"></select> -->
 
+    <div class="container">
+        <!-- Explanations Column -->
+        <div class="column column-left">
+            <h2>Explanation</h2>
+            <p>This section can include text that explains the concept.</p>
+            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+        </div>
+
+        <!-- Pictures Column -->
+        <div class="column column-right">
+            <h2>Pictures</h2>
+            <div id="map"></div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Explanations Column -->
+        <div class="column column-left">
+            <h2>Explanation</h2>
+            <p>This section can include text that explains the concept.</p>
+            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+        </div>
+
+        <!-- Pictures Column -->
+        <div class="column column-right">
+            <h2>Pictures</h2>
+            <img src="./images/shap_predict_cancer.png" class="img">
+        </div>
+
+
+    </div>
+
+    <div class="container">
+        <!-- Explanations Column -->
+        <div class="column column-left">
+            <h2>Explanation</h2>
+            <p>This section can include text that explains the concept.</p>
+            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+        </div>
+
+        <!-- Pictures Column -->
+        <div class="column column-right">
+            <h2>Pictures</h2>
+            <img src="./images/spearman_knn_clustering.png" class="img">
+        </div>
+
+
+    </div>
     <script>
         var map = L.map('map').setView([37.8, -96], 4);
 
