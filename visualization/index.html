@@ -13,7 +13,7 @@
     <script type="text/javascript" src="lib/d3-tip.min.js"></script> -->
     <script type="text/javascript" src="updated_statesData_v2.js"></script>
     <script src="https://d3js.org/d3.v4.js"></script>
-    <script src= "https://d3js.org/d3-color.v1.min.js"></script>  
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -86,13 +86,17 @@
         }
 
         .column-left {
-            flex: 20%; /* 20% width */
-            background-color: #f9f9f9; /* Light gray for distinction */
+            flex: 25%;
+            /* 20% width */
+            background-color: #f9f9f9;
+            /* Light gray for distinction */
         }
 
         .column-right {
-            flex: 80%; /* 80% width */
-            background-color: #e9f7ff; /* Light blue for distinction */
+            flex: 75%;
+            /* 80% width */
+            background-color: #e9f7ff;
+            /* Light blue for distinction */
         }
 
         img {
@@ -101,6 +105,26 @@
             height: auto;
             /* Maintain aspect ratio */
             border: 2px solid #ccc;
+        }
+
+        .aligned-table td:nth-child(2),
+        .aligned-table th:nth-child(2) {
+            text-align: right;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 
@@ -151,19 +175,110 @@
     <div class="container">
         <!-- Explanations Column -->
         <div class="column column-left">
-            <h2>Explanation</h2>
-            <p>This section can include text that explains the concept.</p>
-            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+            <h2>What are the top 10 pollutants that are correlated with cancer rates?</h2>
+            <table class="aligned-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Compound</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Acetaldehyde</td>
+                        <td>0.200</td>
+                    </tr>
+                    <tr>
+                        <td>Acrolein</td>
+                        <td>0.198</td>
+                    </tr>
+                    <tr>
+                        <td>Formaldehyde</td>
+                        <td>0.194</td>
+                    </tr>
+                    <tr>
+                        <td>2,2,4-Trimethylpentane</td>
+                        <td>0.182</td>
+                    </tr>
+                    <tr>
+                        <td>Benzene</td>
+                        <td>0.179</td>
+                    </tr>
+                    <tr>
+                        <td>1,3-Butadiene</td>
+                        <td>0.179</td>
+                    </tr>
+                    <tr>
+                        <td>Polycyclic Organic Matter</td>
+                        <td>0.160</td>
+                    </tr>
+                    <tr>
+                        <td>Nitrogen Oxides</td>
+                        <td>0.160</td>
+                    </tr>
+                    <tr>
+                        <td>Hexane</td>
+                        <td>0.158</td>
+                    </tr>
+                    <tr>
+                        <td>Methanol</td>
+                        <td>0.148</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
 
         <!-- Pictures Column -->
         <div class="column column-right">
-            <h2>Pictures</h2>
+            <h2>Correlation Heat Map of Predictors</h2>
             <img src="./images/spearman_knn_clustering.png" class="img">
         </div>
 
 
     </div>
+
+    <div class="container">
+        <div class="column column-left">
+            <h2>What do the four distinct groups mean?</h2>
+            <p>This matrix is clustered using KNN with 4 distinct groups.</p>
+        </div>
+        <div class="column column-right">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Compound</th>
+                        <th style="text-align: left;">Pollutant Type</th>
+                        <th style="text-align: left;">Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CAP (Criteria Air Pollutants)</td>
+                        <td>Common pollutants regulated under the Clean Air Act that harm health and the environment.
+                        </td>
+                        <td>PM10, PM2.5, Ozone, CO, SO2, NO2, Lead</td>
+                    </tr>
+                    <tr>
+                        <td>CAP/HAP</td>
+                        <td>Pollutants that fall under both CAP and HAP categories.</td>
+                        <td>Certain VOCs</td>
+                    </tr>
+                    <tr>
+                        <td>GHG (Greenhouse Gases)</td>
+                        <td>Gases contributing to climate change by trapping heat in the atmosphere.</td>
+                        <td>CO2, CH4, N2O, HFCs, PFCs, SF6</td>
+                    </tr>
+                    <tr>
+                        <td>HAP (Hazardous Air Pollutants)</td>
+                        <td>Air toxics causing serious health effects like cancer and birth defects.</td>
+                        <td>Benzene, Formaldehyde, Mercury, Arsenic</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
         var map = L.map('map').setView([37.8, -96], 4);
 
@@ -179,8 +294,8 @@
 
         const predictions = statesData.features.map(d => d.properties.predict)
         const colorScale = d3.scaleQuantile()
-                                .domain(predictions)
-                                .range(colors)
+            .domain(predictions)
+            .range(colors)
 
         var quantileBins = colorScale.quantiles()
         // round quantiles
@@ -272,19 +387,19 @@
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'info legend')
-                //grades = [5.75, 6, 6.25, 6.5, 6.75, 7, 7.25, 7.5],
-                //labels = [];
+            //grades = [5.75, 6, 6.25, 6.5, 6.75, 7, 7.25, 7.5],
+            //labels = [];
 
             // loop through our density intervals and generate a label with a colored square for each interval
             for (var i = 0; i < quantileBins.length; i++) {
 
-                if (i == 0){
+                if (i == 0) {
                     div.innerHTML +=
-                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) +'"></i> < ' + quantileBins[i] +'%<br>'
+                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) + '"></i> < ' + quantileBins[i] + '%<br>'
                 }
                 else if (i == quantileBins.length - 1) {
                     div.innerHTML +=
-                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) +'"></i> > ' + quantileBins[i] +'%<br>'
+                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) + '"></i> > ' + quantileBins[i] + '%<br>'
                 }
                 else {
 
