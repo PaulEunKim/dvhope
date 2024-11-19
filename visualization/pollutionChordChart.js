@@ -87,9 +87,6 @@ function createChordChart(svg, emissionsData, state, pollutantSelection) {
     .attr('dy', '0em')
     .attr('text-anchor', 'middle')
     .text(`Top Industry Polluters in ${d_select.state}`)
-    .append('text')
-    .attr('dy', '1em')
-    .text(pollutantSelection)
 
     // add the groups on the outer part of the circle
     var group = svg
@@ -135,6 +132,7 @@ function createChordChart(svg, emissionsData, state, pollutantSelection) {
             return colors[d.source.index]
             })
         .style("stroke", "black")
+        .style('stroke-opacity', 0.6)
         .style('mix-blend-mode', 'multiply')
         .on("mouseover", function(event, d) {
             d3.select(this)
