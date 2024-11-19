@@ -1,0 +1,317 @@
+<!-- Interactive choropleth map used from https://leafletjs.com/examples/choropleth/ -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <!-- add title -->
+    <title>Predicted Cancer Rates based off Pollutants</title>
+    <!-- import required libraries here -->
+    <!-- <script type="text/javascript" src="lib/d3.v5.min.js"></script>
+    <script type="text/javascript" src="lib/topojson.v2.min.js"></script>
+    <script type="text/javascript" src="lib/d3-legend.min.js"></script>
+    <script type="text/javascript" src="lib/d3-geo-projection.v2.min.js"></script> -->
+    <!-- <script type="text/javascript" src="lib/d3-tip.min.js"></script> -->
+    <script type="text/javascript" src="updated_statesData_v2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://d3js.org/d3-color.v1.min.js"></script>
+    <script type='module' src="https://cdn.skypack.dev/d3-hierarchy@3"></script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        /* define CSS rules here */
+        #map {
+            height: 500px;
+            width: 50%
+        }
+
+        #chordChart {
+            height: 500px;
+            width: 50%
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        .title {
+            font-size: 46px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* Ensure space between columns */
+            align-items: flex-start;
+            /* Align items at the top */
+            gap: 20px;
+            /* Add space between columns */
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1;
+            /* Each column takes up equal space */
+            padding: 10px;
+        }
+
+        .column-left {
+            flex: 25%;
+            /* 20% width */
+            background-color: #f9f9f9;
+            /* Light gray for distinction */
+        }
+
+        .column-right {
+            flex: 75%;
+            /* 80% width */
+            background-color: #e9f7ff;
+            /* Light blue for distinction */
+        }
+
+        img {
+            max-width: 100%;
+            /* Ensure images fit in their container */
+            height: auto;
+            /* Maintain aspect ratio */
+            border: 2px solid #ccc;
+        }
+
+        .aligned-table td:nth-child(2),
+        .aligned-table th:nth-child(2) {
+            text-align: right;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        div.tooltip-chord {
+        position: absolute;
+        text-align: center;
+        padding: .5rem;
+        background: #FFFFFF;
+        color: #313639;
+        border: 1px solid #313639;
+        border-radius: 8px;
+        pointer-events: none;
+        font-size: 1.3rem;
+    }
+    </style>
+
+    <title></title>
+</head>
+
+
+<body>
+        <!-- Add heading for the visualization -->
+    <h1 class="title">Predicted Cancer Rates based off Pollutants</h1>
+
+    <div class="container">
+        <!-- Explanations Column -->
+        <div class="column column-left">
+            <h2>Explanation</h2>
+            <p>This section can include text that explains the concept.</p>
+            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+        </div>
+        <div id="chordChart"></div>
+
+        <!-- Pictures Column -->
+        <div class="column column-right">
+            <h2>Pictures</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src='pollutionChordChart.js'></script>
+
+    <script>
+        var map = L.map('map').setView([37.8, -96], 4);
+
+        var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        L.geoJson(statesData).addTo(map);        // // enter code to create svg
+
+        // d3 color schemes are being stupid, so hardcode color values
+        mapColors = ['#f7fbff', '#deebf7', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594']
+
+        const predictions = statesData.features.map(d => d.properties.predict)
+        const colorScale = d3.scaleQuantile()
+            .domain(predictions)
+            .range(mapColors)
+
+        var quantileBins = colorScale.quantiles()
+        // round quantiles
+        quantileBins = quantileBins.map(d => Number(d.toFixed(2)))
+
+        console.log("Quantile Bins", quantileBins)
+
+        function style(feature) {
+            return {
+                fillColor: colorScale(feature.properties.predict),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        L.geoJson(statesData, { style: style }).addTo(map);
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+
+            layer.bringToFront();
+
+            info.update(layer.feature.properties);
+
+        }
+
+        function resetHighlight(e) {
+            geojson.resetStyle(e.target);
+            info.update();
+        }
+
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: function(e) {
+                    zoomToFeature(e)
+
+                    console.log(e)
+
+                    let state = e.sourceTarget.feature.properties.name
+
+                    d3.json(data_path).then(function(data) {
+                        createChordChart(svgChord, data, state)
+                        })
+
+                    console.log(state)
+                } //zoomToFeature
+            });
+        }
+
+        geojson = L.geoJson(statesData, {
+            style: style,
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (props) {
+            this._div.innerHTML = '<h4>Age Adjusted Cancer Prevalence</h4>' + (props ?
+                '<b>' + props.name + '</b><br />' + props.predict.toFixed(1) + '%'
+                : 'Hover over a state');
+        };
+
+        info.addTo(map);
+
+        var legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'info legend')
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < quantileBins.length; i++) {
+
+                if (i == 0) {
+                    div.innerHTML +=
+                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) + '"></i> < ' + quantileBins[i] + '%<br>'
+                }
+                else if (i == quantileBins.length - 1) {
+                    div.innerHTML +=
+                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) + '"></i> > ' + quantileBins[i] + '%<br>'
+                }
+                else {
+
+                    div.innerHTML +=
+                        '<i style="background:' + colorScale(quantileBins[i] - 0.1) + '"></i> ' +
+                        quantileBins[i] + '%' + (quantileBins[i + 1] ? '&ndash;' + quantileBins[i + 1] + '%' : '+') + '<br>';
+                }
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+    </script>
+</body>
+
+</html>
