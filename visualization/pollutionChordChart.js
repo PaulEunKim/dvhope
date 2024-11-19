@@ -5,7 +5,7 @@ margin = {'top': 50, 'bottom': 50, 'left': 50, 'right': 50}
 
 // Based off this: https://observablehq.com/@d3/directed-chord-diagram/2
 // chord chart dimensions
-const width = 250 + margin.left + margin.right
+const width = 300 + margin.left + margin.right
 const height = width + margin.top + margin.bottom
 const innerRadius = Math.min(width, height) * 0.5 - margin.top
 const outerRadius = innerRadius + 10
@@ -25,31 +25,48 @@ var tooltip = d3.select("#chordChart")
 
 var colors = ['#09152F','#1D0E58','#621282','#AE138A','#DD1346','#F25D2C,', '#F8D254','#D8FC7D','#BAFFA8','#D6FFE3']
 
-// let zoom = d3.zoom()
-// 	.on('zoom', handleZoom);
-  
-// initZoom();
+var dropDown = d3.select('body')
+                .select('select.pollutants');
 
-// load state pollutants json
 d3.json(data_path).then(function(data) {
 
     console.log(data)
 
-    createChordChart(svgChord, data, 'USA')
+    dropDownOptions = Object.keys(data[0]).filter(d => d != 'state')
+
+    // populate dropdown
+    dropDown.selectAll('option')
+            .data(dropDownOptions)
+            .enter()
+            .append('option')
+            .attr('value', d => d)
+            .text(d => d)
+
+    var defaultPollutant = d3.select('select.pollutants').node().value
+
+    createChordChart(svgChord, data, 'USA', defaultPollutant)
+
+    // event listener to change dropdown
+    d3.select('select.pollutants')
+        .on('change', function() {
+                svgChord.selectAll("*").remove()
+
+                createChordChart(svgChord, data, 'USA', d3.select(this).property('value'))
+                })
 
 }).catch(error => console.log(error))
 
-function createChordChart(svg, emissionsData, state) {
+function createChordChart(svg, emissionsData, state, pollutantSelection) {
     // clear existing elements
     svg.selectAll("*").remove();
 
     let d_select = emissionsData.find(d => d.state === state)
     
-    console.log(d_select)
+    console.log('fn test', pollutantSelection)
 
-    matrix = d_select.data.data // yikes. my naming conventions suck
-    naics = d_select.data.index
-    pollutants = d_select.data.columns
+    matrix = d_select[pollutantSelection].data
+    naics = d_select[pollutantSelection].index
+    pollutants = d_select[pollutantSelection].columns
 
     let chord = d3.chordDirected()
         .padAngle(12 / innerRadius)
@@ -67,8 +84,12 @@ function createChordChart(svg, emissionsData, state) {
     // make title
     svg.append('text')
     .attr('y', -height/2 + margin.top + 20)
+    .attr('dy', '0em')
     .attr('text-anchor', 'middle')
-    .text(`Top Polluting Industries and Pollutants in ${d_select.state}`)
+    .text(`Top Industry Polluters in ${d_select.state}`)
+    .append('text')
+    .attr('dy', '1em')
+    .text(pollutantSelection)
 
     // add the groups on the outer part of the circle
     var group = svg
@@ -145,7 +166,7 @@ function formatNumber(num) {
     } else if (num >= 1000) {
         return (num / 1000).toFixed(1) + 'K';
     } else {
-        return num;
+        return (num / 1).toFixed(1);
     }
     }
 
@@ -164,13 +185,3 @@ var hideTooltip = function(d) {
     tooltip
     .style("opacity", 0)
     }
-
-// function handleZoom(e) {
-//     d3.select('svg g')
-//         .attr('transform', e.transform);
-// }
-
-// function initZoom() {
-//     d3.select('svg')
-//         .call(zoom);
-// }
