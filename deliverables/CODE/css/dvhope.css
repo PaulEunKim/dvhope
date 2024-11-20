@@ -1,0 +1,127 @@
+#map {
+    height: 500px;
+    display: inline-block;
+    width: 100%;
+    z-index: 4;
+}
+
+#chordChart {
+    display: inline-block;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 5 px;
+    padding: 15 px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* Ensure space between columns */
+    align-items: flex-start;
+    /* Align items at the top */
+    gap: 10px;
+    /* Add space between columns */
+    padding: 20px;
+}
+
+.column {
+    flex: 1;
+    /* Each column takes up equal space */
+    padding: 10px;
+}
+
+.column-left {
+    flex: 25%;
+    /* 20% width */
+    background-color: #f9f9f9;
+    /* Light gray for distinction */
+}
+
+.column-right {
+    flex: 75%;
+    /* 80% width */
+    background-color: #e9f7ff;
+    /* Light blue for distinction */
+}
+
+img {
+    max-width: 100%;
+    /* Ensure images fit in their container */
+    height: auto;
+    /* Maintain aspect ratio */
+    border: 2px solid #ccc;
+}
+
+.aligned-table td:nth-child(2),
+.aligned-table th:nth-child(2) {
+    text-align: right;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.tooltip {
+    position: relative;
+}
+
+div.tooltip-chord {
+position: absolute;
+text-align: center;
+padding: .5rem;
+background: #FFFFFF;
+color: #313639;
+border: 1px solid #313639;
+border-radius: 8px;
+pointer-events: none;
+font-size: .5rem;
+z-index: 10000;
+}
