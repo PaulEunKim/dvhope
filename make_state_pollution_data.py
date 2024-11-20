@@ -6,9 +6,14 @@ import json
 from data_loading_utils import DataLoader
 from pprint import pprint
 
+# If dataset has been split into several files, you can use this helper function to load all the data
 pollution_path = os.path.join('data', 'nei_pollution')
 dl = DataLoader(pollution_path)
 df = dl.get_dfs()
+
+# elif the data are in one big file, just load as a pandas dataframe the usual way
+# if you're doing a county analysis, make sure fips codes are read as strings and not as numbers! Leading zeros matter
+# df = pd.read_csv('path//to//file.csv'', dtype={'FIPS':str, 'EPA Region':str})
 
 emissions_col = 'Emissions (Tons)'
 print(df.columns)

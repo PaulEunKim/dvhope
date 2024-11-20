@@ -13,10 +13,12 @@ class DataLoader():
         """Returns a pandas df from all the csv files specified in the directory"""
         if not os.path.exists(self.path):
             print('Path Not Found!')
-        else:
+        elif os.path.isdir(self.path):
             dfs = [pd.read_csv(file, dtype={'FIPS':str, 'EPA Region':str}, index_col = 0) for file in self.file_paths]
 
             return pd.concat(dfs).sort_index()
+        else:
+            return pd.read_csv(path, dtype={'FIPS':str, 'EPA Region':str})
         
 if __name__ == '__main__':
     path = os.path.join('data', 'nei_pollution')
