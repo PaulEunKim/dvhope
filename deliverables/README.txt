@@ -5,17 +5,8 @@ DESCRIPTION:
 DV-HOPE is an series of
 
 INSTALLATION:
-Open
+Install a web browser of choice
 
 EXECUTION:
-Open
+Double click index.html
 
-```
-conda create --name dvhope
-conda activate dvhope
-conda install -c conda-forge altair numpy pandas streamlit plotly folium streamlit-folium
-
-git checkout streamlit_concept
-
-streamlit run main.py
-```
