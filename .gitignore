@@ -5,3 +5,6 @@
 /data_model/*.csv
 /data_preprocessing/*.csv
 /exploratory_data_analysis/*.csv
+
+.DS_Store
+
