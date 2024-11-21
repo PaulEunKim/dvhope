@@ -142,14 +142,15 @@
     <div class="container">
         <!-- Explanations Column -->
         <div class="column column-left">
-            <h2>Explanation</h2>
-            <p>This section can include text that explains the concept.</p>
-            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+            <h2>Predicted Cancer Rates</h2>
+            <p>
+                Based off pollutants from the EPA's National Emissions Inventory, these are the predictions of cancer prevalance for each state. The predictions are from real input values from the test set, but the cancer rates are predicted from the model.
+            </p>
         </div>
 
         <!-- Pictures Column -->
         <div class="column column-right">
-            <h2>Pictures</h2>
+            <h2>Interactive Choropleth Map</h2>
             <div id="map"></div>
 
         </div>
@@ -158,9 +159,37 @@
     <div class="container">
         <!-- Explanations Column -->
         <div class="column column-left">
-            <h2>Explanation</h2>
-            <p>This section can include text that explains the concept.</p>
-            <p>You can add bullet points, longer paragraphs, or other relevant content here.</p>
+            <h2>Stacked Ensemble Model</h2>
+            <table border="1" style="border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mean Squared Error (MSE)</td>
+                        <td>0.182</td>
+                    </tr>
+                    <tr>
+                        <td>Root Mean Squared Error (RMSE)</td>
+                        <td>0.427</td>
+                    </tr>
+                    <tr>
+                        <td>Mean Absolute Error (MAE)</td>
+                        <td>0.298</td>
+                    </tr>
+                    <tr>
+                        <td>R-squared (R²)</td>
+                        <td>0.418</td>
+                    </tr>
+                    <tr>
+                        <td>Mean Residual Deviance</td>
+                        <td>0.182</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <!-- Pictures Column -->
@@ -304,16 +333,17 @@
         console.log("Quantile Bins", quantileBins)
 
         // not currently used with coloScale function implemented
-        function getColor(d) {
-            return d > 7.5 ? '#800026' :
-                d > 7.25 ? '#BD0026' :
-                    d > 7.0 ? '#E31A1C' :
-                        d > 6.75 ? '#FC4E2A' :
-                            d > 6.5 ? '#FD8D3C' :
-                                d > 6.25 ? '#FEB24C' :
-                                    d > 6.0 ? '#FED976' :
-                                        '#FFEDA0';
-        }
+        // function getColor(d) {
+        //     return d > 7.5 ? '#800026' :
+        //         d > 7.25 ? '#BD0026' :
+        //             d > 7.0 ? '#E31A1C' :
+        //                 d > 6.75 ? '#FC4E2A' :
+        //                     d > 6.5 ? '#FD8D3C' :
+        //                         d > 6.25 ? '#FEB24C' :
+        //                             d > 6.0 ? '#FED976' :
+        //                                 '#FFEDA0';
+        // }
+
         function style(feature) {
             return {
                 fillColor: colorScale(feature.properties.predict),
