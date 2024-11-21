@@ -7,13 +7,14 @@ from data_loading_utils import DataLoader
 from pprint import pprint
 
 # If dataset has been split into several files, you can use this helper function to load all the data
-pollution_path = os.path.join('data', 'nei_pollution')
-dl = DataLoader(pollution_path)
-df = dl.get_dfs()
+# pollution_path = os.path.join('data', 'nei_pollution')
+# dl = DataLoader(pollution_path)
+# df = dl.get_dfs()
 
 # elif the data are in one big file, just load as a pandas dataframe the usual way
 # if you're doing a county analysis, make sure fips codes are read as strings and not as numbers! Leading zeros matter
-# df = pd.read_csv('path//to//file.csv'', dtype={'FIPS':str, 'EPA Region':str})
+pollution_path = os.path.join('..', 'data', 'NEI_pollution_source_2020.csv')
+df = pd.read_csv(pollution_path, dtype={'FIPS':str, 'EPA Region':str})
 
 emissions_col = 'Emissions (Tons)'
 print(df.columns)
@@ -94,19 +95,12 @@ def make_dense_pollution_matrix(df: pd.DataFrame, n: int= 10) -> pd.DataFrame:
 
 sums_df[['State', 'NAICS', 'Pollutant', emissions_col]].groupby('State', group_keys=False).apply(lambda x: update_dict(x, filter_co2=False))
 
-pprint(dense_list[0])
+# pprint(dense_list[0])
 
-with open(os.path.join('data', 'states_pollution_sparse.json'), 'w') as f:
+with open(os.path.join('..', 'data', 'states_pollution_sparse.json'), 'w') as f:
     json.dump(sparse_list, f, indent=4)
 
-with open(os.path.join('data', 'states_pollution_dense.json'), 'w') as f:
+with open(os.path.join('..', 'data', 'states_pollution_dense.json'), 'w') as f:
     json.dump(dense_list, f, indent=4, allow_nan=False)
 
-# pprint(d['California'])
-# print(sums_df[emissions_col].unstack())
-
-# sums_df[emissions_col].groupby(level=0).apply(lambda x: update_d(x.name, x.to_dict()))
-
-# sums_df[emissions_col].unstack().to_json(os.path.join('data', 'state_pollutants.json'), orient='split')
-
-# sums_df[emissions_col].to_csv(os.path.join('data', 'state_pollutants.csv'))
+print('All Done!')
