@@ -25,6 +25,12 @@ conda activate dvhope
 pip install -r requirements.txt
 ```
 
+# DATA REPLICATION
+To produce the cancer data file pivoted_cancer.csv (needed for training the model), you will need to run the CODE/prediction/data_wrangling/pre_process.py
+
+To see the full process on how it was converted to .json for compatibility with the D3 map, you can navigate to dev branch and go to model_evaluation\view_predictions_2 copy.ipynb.
+
+
 # EXECUTION
 
 The following steps run a webserver to view the html.
