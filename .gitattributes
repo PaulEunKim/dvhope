@@ -1,2 +1,0 @@
-CODE/prediction/data/NEI_pollution_source_2020.csv filter=lfs diff=lfs merge=lfs -text
-CODE/prediction/data/NEI_pollution_source_2020.csv filter=lfs diff=lfs merge=lfs -text
