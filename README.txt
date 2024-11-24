@@ -18,14 +18,14 @@ To view some exploratory data analysis, checkout CODE/eda.
 
 No installation is needed to run the demo, just a web browser.
 However, if you want to replicate data manipulation, modeling, and plot creation,
-the main packages are included in the requirements.txt:
+the main packages are included in CODE/requirements.txt:
 
 1. Install Java 8 (required for H2O notebooks) and Conda
 2. Run the below commands to install python requirements
 ```
 conda create --name dvhope python==3.10
 conda activate dvhope
-pip install -r requirements.txt
+pip install -r CODE/requirements.txt
 ```
 
 # EXECUTION
