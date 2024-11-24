@@ -30,8 +30,7 @@ pip install -r CODE/requirements.txt
 
 # EXECUTION
 
-The following steps run a webserver to view the html.
-Alternatively, you can open CODE/demo/index.html in a browser after cloning the project.
+The following steps run a webserver to view the html
 
 1. Clone the repository and change the directory
 
@@ -47,4 +46,4 @@ python -m http.server 8000
 ```
 
 3. Open a browser and go to localhost:8000
-4. Navigate to CODE/demo.
+4. Navigate to CODE/domestic and CODE/global.
