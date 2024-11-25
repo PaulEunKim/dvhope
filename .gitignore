@@ -9,3 +9,4 @@
 .DS_Store
 
 /data/NEI_nonpointsource/*.csv
+CODE/prediction/data/NEI_pollution_source_2020.csv
