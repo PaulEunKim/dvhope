@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import xgboost as xgb
 import shap
-import random
 import matplotlib.pyplot as plt
 import plotly.express as px
 import string
@@ -11,6 +10,7 @@ import webbrowser
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score
+import secrets
 
 def return_transformed_name(name):
     add_only_emission_label = [
@@ -70,7 +70,7 @@ def start_predict_xgboost():
 
     random_seed = 42
     np.random.seed(random_seed)
-    random.seed(random_seed)
+    secrets.SystemRandom().seed(random_seed)
 
     files = define_files()
 
